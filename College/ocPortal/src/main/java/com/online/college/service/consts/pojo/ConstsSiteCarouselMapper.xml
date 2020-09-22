@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.online.college.dao.consts.ConstsSiteCarouselDao">
+
+	<resultMap id="BeanResultMap" type="com.online.college.service.consts.pojo.ConstsSiteCarousel" >
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="name" property="name"  jdbcType="VARCHAR" />
+		<result column="picture" property="picture"  jdbcType="VARCHAR" />
+		<result column="url" property="url"  jdbcType="VARCHAR" />
+		<result column="weight" property="weight"  jdbcType="INTEGER" />
+		<result column="enable" property="enable"  jdbcType="TINYINT" />
+		<result column="create_time" property="createTime"  jdbcType="DATE" />
+		<result column="create_user" property="createUser"  jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime"  jdbcType="TIMESTAMP" />
+		<result column="update_user" property="updateUser"  jdbcType="VARCHAR" />
+		<result column="del" property="del"  jdbcType="TINYINT" />
+	</resultMap> 
+
+
+	<sql id="All_Columns">
+		name, picture, url, weight, enable, create_time, create_user, 
+		update_time, update_user, del, id 
+	</sql>
+
+	<select id="showCarousels" parameterType="java.lang.Integer" resultMap="BeanResultMap">
+		SELECT
+		<include refid="All_Columns" />
+		FROM t_consts_site_carousel
+		WHERE enable = 1
+		ORDER BY weight DESC
+		LIMIT 0 , 4
+	</select>
+
+
+
+</mapper>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>在线网校学习平台</title>
+
+    <link href="${s.base}/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${s.base}/res/css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="${s.base}/res/css/index.css" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" src="${s.base}/res/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="${s.base}/res/js/bootstrap.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="icon" type="image/png" href="${s.base}/res/image/ico.png" sizes="16x16">
+</head>
+<body>
+<!-- 头部-start -->
+<#include "./common/header.html">
+<!-- 登录注册-end -->
+
+<div class="f-main clearfix">
+    <!-- 一级分类-start -->
+    <div class="course-nav-row clearfix">
+        <span class="hd">方向：</span>
+        <ul class="course-nav">
+
+            <li class="course-nav-item <#if curCode?? && curCode=='-1'>cur-course-nav</#if>">
+                <a href="javascript:void(0)" onclick="_queryPage(1,'-1',undefined)">全部</a>
+            </li>
+            <#if classify??>
+                <#list classify as item>
+                    <li class="course-nav-item <#if curCode?? && curCode==item.code>cur-course-nav</#if>">
+                        <a href="javascript:void(0)" onclick="_queryPage(1,'${item.code}',undefined)">${item.name}</a>
+                    </li>
+                </#list>
+            </#if>
+        </ul>
+    </div>
+    <!-- 一级分类-end -->
+
+    <!-- 二级分类-start -->
+    <div class="course-nav-row clearfix">
+        <span class="hd">分类：</span>
+        <ul class="course-nav">
+            <li class="course-nav-item <#if curSubCode?? && curSubCode=='-2'>cur-course-nav</#if>">
+                <a href="javascript:void(0)" onclick="_queryPage(1,'-2',undefined)">全部</a>
+            </li>
+            <#if classifgSub??>
+                <#list classifgSub as item>
+                 <li class="course-nav-item <#if curSubCode?? && curSubCode==item.code>cur-course-nav</#if>">
+                    <a href="javascript:void(0)" onclick="_queryPage(1,'${item.code}',undefined)">${item.name}</a>
+                 </li>
+                </#list>
+            </#if>
+        </ul>
+    </div>
+    <!-- 二级分类-end -->
+<!-- 课程列表-start -->
+<div class="types-block clearfix" style="padding:0px;">
+    <h3 style="margin-bottom: 20px;">
+        <span class="types-title" style="margin-right:40px;">课程列表</span>
+        <a href="javascript:void(0)" style="display: inline-block;margin-right:20px;" onclick="_queryPage(1,undefined,'last')">
+                <span <#if sort?? && sort=='last'>class="color-oc"</#if> >最新</span>
+        </a>
+        <a href="javascript:void(0)" style="display: inline-block;" onclick="_queryPage(1,undefined,'pop')">
+            <span <#if sort?? && sort=='pop'>class="color-oc"</#if> >最热</span>
+        </a>
+    </h3>
+    <div class="types-content clearfix" style="margin-bottom: 20px;">
+
+
+        <#if tailcourse?? && tailcourse.courseList?? >
+            <#list tailcourse.courseList as item>
+            <#assign n =item_index + 1/>
+            <a href="${s.base}/course/learn/${item.id}.html">
+                <div class="course-card-container" <#if n %5 == 0>style="margin-right: 0px;" </#if> >
+        <#if n %5 == 0>
+        <div class="course-card-top green-bg">
+            <#elseif n %4 == 0>
+            <div class="course-card-top pink-bg">
+                <#elseif n %3 == 0>
+                <div class="course-card-top purple-bg">
+                    <#elseif n %2 == 0>
+                    <div class="course-card-top gray-bg">
+                        <#else>
+                        <div class="course-card-top brown-bg">
+                        </#if>
+                        <span>${item.subClassifyName!}</span>
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-name">${item.name!}</h3>
+                        <p title="找Android自动化测试工作必学的主流工具、框架和自动化脚本">${item.brief!}</p>
+                        <div class="course-card-bottom">
+                        <#if item.free == 1>
+                        <div class="course-card-info">
+                            <#if item.level == 1>
+                            初级
+                            <#elseif item.level == 2>
+                            中级
+                            <#else>
+                            高级
+                        </#if>
+                        <span>·</span>${item.studyCount!}人在学
+                    </div>
+                    <#else>
+                    <div class="course-card-info">${item.studyCount!}人在学</div>
+                    <div class="course-card-price">￥${item.price!}</div>
+                </#if>
+            </div>
+                    </div>
+                </div>
+            </a>
+            </#list>
+        </#if>
+    </div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="javascript:void(0)" aria-label="Previous" onclick="_queryPage(1,undefined,undefined)">
+                <span aria-hidden="true">首页</span>
+            </a>
+        </li>
+        <#if tailcourse.pageSum?? && tailcourse.pageSum gt 1>
+            <#list  1..tailcourse.pageSum as item>
+                <#if item==tailcourse.pageNum >
+                    <li class="page-item"><a class="page-link" href="javascript:void(0)">${item}</a></li>
+                <#else>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="_queryPage(${item},undefined,undefined)">${item}</a></li>
+                </#if>
+
+            </#list>
+        </#if>
+        <li class="page-item">
+            <a class="page-link" href="javascript:void(0)" aria-label="Next" onclick="_queryPage(${tailcourse.pageSum},undefined,undefined)">
+                <span aria-hidden="true">尾页</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+</div>
+<!-- 课程列表-end -->
+</div>
+<!-- 页脚-start -->
+<#include "./common/footer.html">
+<!-- 页脚-end-->
+<script type="text/javascript">
+    var _curCode='${curCode!}';
+    var _curSubCode='${curSubCode!}';
+    function _queryPage(page,code,sort){
+        console.log("接收的数据"+code);
+        console.log("数据"+_curSubCode+"数据"+_curSubCode);
+        var pageNum='?c=';
+        if(code==undefined){
+            //说明是从分页按钮过来的
+            code=_curCode;
+            if(_curSubCode!='-2'){
+                code=_curSubCode;
+            }
+        }
+        if(code=='-2'){
+             code=_curCode;
+        }
+        if(code!='-1'&&code!=""){
+            code=code;
+        }
+        pageNum=pageNum+code;
+        if(page!=undefined){
+            pageNum=pageNum+"&pageNum="+page;
+        }
+        if(sort!=undefined){
+            pageNum=pageNum+"&pageSort="+sort;
+        }
+        console.log("数据"+code+"链接"+pageNum);
+        window.location.href="${s.base}/course/tolist.html"+pageNum;
+    }
+</script>
+</body>
+</html>

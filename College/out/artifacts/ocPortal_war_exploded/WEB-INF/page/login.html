@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>在线网校学习平台</title>
+
+    <link rel="stylesheet" type="text/css" href="${s.base}/res/css/util.css">
+    <link rel="stylesheet" type="text/css" href="${s.base}/res/css/main.css">
+    <link rel="stylesheet" type="text/css" href="${s.base}/res/css/material-design-iconic-font.min.css">
+
+
+    <script type="text/javascript" src="${s.base}/res/js/jquery-3.2.1.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="icon" type="image/png" href="${s.base}/res/image/ico.png" sizes="16x16">
+
+    <script>$(function () {
+
+        // alert(navigator.userAgent);
+        // 兼容模式
+        if (navigator.userAgent.indexOf("Trident") > 0) {
+            layer.msg('亲，请不要使用"兼容模式"，因为会让页面渲染很慢甚至产生未知错误，请使用"极速模式"浏览本站。', {
+                icon: 7,
+                time: 10000
+            });
+        }
+
+        // MSIE内核
+        if (navigator.userAgent.indexOf("MSIE") > 0) {
+            layer.msg('亲，请不要使用古董般的IE浏览器 ，请使用现代浏览器浏览本站，比如谷歌、360、QQ、火狐等浏览器。', {
+                icon: 2,
+                time: 10000
+            });
+
+        }
+
+        //点击忘记密码
+        $('#forget_password').click(function () {
+            hideBox();
+            $('.forget_login_box').show();
+        })
+
+        //点击返回
+        $('.forget_back').click(function () {
+            hideBox();
+            $('.login_box').show();
+        })
+
+        function hideBox() {
+            $('.forget_login_box').hide();
+            $('.login_box').hide();
+            $('.reg_box').hide();
+        }
+
+        //回车登陆
+        document.onkeydown = function (e) {
+            var ev = document.all ? window.event : e;
+            if (ev.keyCode == 13) {
+                $('#loginBtn').click();
+            }
+        }
+
+        //点击登陆
+        $('#loginBtn').click(function () {
+            console.log("点击登入");
+            $('#loginBtn').html('登陆中...').attr('disabled', true);
+            var user_name = $('[name=userName]').val();
+            var user_pwd = $('[name=userPassword]').val();
+            console.log("数据" + user_name+"密码"+user_pwd)
+            //post提交
+            $("#form-login").submit();
+        })
+    })
+    </script>
+</head>
+<body>
+<div class="limiter">
+    <div class="container-login100" style="">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+
+            <#if codo?? >
+            <p style="color:red;">${codo}</p>
+            </#if>
+            <div class="login100-form validate-form login forget_login_box" style="display: none">
+                <span class="login100-form-title p-b-49">忘记密码</span>
+                <div class="wrap-input100 validate-input m-b-23" data-validate="请输入邮箱">
+                    <span class="label-input100">邮箱</span>
+                    <input class="input100" type="text" name="to_email" placeholder="请输入邮箱" autocomplete="off">
+                    <span class="focus-input100" data-symbol=""></span>
+                </div>
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <button class="login100-form-btn" id="sendEmail">发 送</button>
+                    </div>
+                </div>
+                <div class="flex-col-c p-t-25">
+                    <a href="javascript:" class="txt2 forget_back">返回</a>
+                </div>
+            </div>
+
+            <form action="${s.base}/auth/dologin.html" method="post" id="form-login">
+            <div class="login100-form validate-form login login_box">
+                <span class="login100-form-title p-b-49">登录</span>
+                <div class="wrap-input100 validate-input m-b-23" data-validate="请输入用户名或者卡号">
+                    <span class="label-input100">用户名</span>
+                    <input class="input100" type="text" name="userName" placeholder="请输入手机号" autocomplete="off">
+                    <span class="focus-input100" data-symbol=""></span>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="请输入密码">
+                    <span class="label-input100">密码</span>
+                    <input class="input100" type="password" name="userPassword" placeholder="请输入密码">
+                    <span class="focus-input100" data-symbol=""></span>
+                </div>
+                <div class="text-right p-t-8 p-b-31">
+                    <a href="javascript:" id="forget_password">忘记密码？</a></div>
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <button class="login100-form-btn" id="loginBtn">登 录</button>
+                    </div>
+                </div>
+                <div class="flex-col-c p-t-25">
+                    <button type="button" id="regBtnone" class="txt2"></button></div>
+            </div>
+            </form>
+            <div class="flex-col-c p-t-25">
+                <a href="${s.base}/auth/register.html" class="txt2">注册</a></div>
+            <div class="flex-col-c p-t-25">
+                <a href="http://www.beian.miit.gov.cn" class="txt2">我已经同意服务内容</a></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

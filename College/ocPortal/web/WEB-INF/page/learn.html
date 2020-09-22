@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>在线网校学习平台</title>
+
+    <link href="${s.base}/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${s.base}/res/css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="${s.base}/res/css/index.css" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" src="${s.base}/res/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="${s.base}/res/js/bootstrap.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="icon" type="image/png" href="${s.base}/res/image/ico.png" sizes="16x16">
+</head>
+<body>
+<!-- 头部-start -->
+<#include "./common/header.html">
+<!-- 登录注册-end -->
+
+<div class="f-main clearfix">
+    <!-- 基本信息 -->
+    <div class="main-course-left">
+        <div class="course-info">
+            <div class="course-title">${course.name}</div>
+
+
+            <div class="course-meta">
+                <#if userCourseSection??>
+                <a href="${s.base}/course/viedo/${userCourseSection.id}.html" class="learn-btn" >继续学习</a>
+                <#else>
+                <#if firstLean??>
+                <a href="${s.base}/course/viedo/${firstLean.id}.html" class="learn-btn" >开始学习</a>
+                </#if>
+
+                </#if>
+
+
+                <div class="static-item"  >
+                    <#if userCourseSectionName??>
+                    <div class="meta">上次学到</div>
+                    <div class="meta-value">${userCourseSectionName.name}</div>
+                    <#else>
+                    <div class="meta">没有学习</div>
+                    <div class="meta-value">开始学习吧</div>
+                    </#if>
+
+                </div>
+                <div class="static-item"  >
+                    <div class="meta">学习人数</div>
+                    <div class="meta-value">${course.studyCount}</div>
+                </div>
+                <div class="static-item">
+                    <div class="meta">难度级别</div>
+                    <div class="meta-value">${course.level}</div>
+                </div>
+                <div class="static-item" style="border:none;">
+                    <div class="meta">课程时长</div>
+                    <div class="meta-value">${course.time}</div>
+                </div>
+                <a onclick="" href="javascript:void(0)" class="following" style="float: right;margin-top:5px;" title="收藏">
+                </a>
+            </div>
+
+            <div class="course-brief">
+                简介：${course.brief}
+            </div>
+
+            <div class="course-menu">
+                <a  href=""><span class="menu-item cur">章节</span></a>
+                <a  href="./comment.html"><span class="menu-item">评论</span></a>
+            </div>
+        </div>
+        <!-- 基本信息-end -->
+
+        <!-- 课程章节 - start -->
+        <div>
+            <#if courseSection??>
+                <#list courseSection as itemfirst>
+                <div class="chapter">
+                    <a href="javascript:void(0);" class="js-open">
+                        <h3>
+                            <strong><div class="icon-chapter">=</div> ${itemfirst.name}</strong>
+                            <span class="drop-down">▼</span>
+                        </h3>
+                    </a>
+                        <ul class="chapter-sub">
+                            <#if itemfirst.courseSectionList??>
+                            <#list itemfirst.courseSectionList as itemsecond>
+                            <a href="${s.base}/course/viedo/${itemsecond.id}.html" >
+                                <li class="chapter-sub-li">
+                                    <i class="icon-video">▶</i> ${itemsecond.name} ${itemsecond.time}
+<!--                                    <div class="preview-btn">继续学习</div>-->
+                                </li>
+                            </a>
+                        </#list>
+                        </#if>
+                        </ul>
+                </div>
+                </#list>
+            </#if>
+        </div>
+        <!-- 课程章节 - end -->
+    </div>
+
+    <!-- 教师信息&推荐课程 - start -->
+    <div class="main-course-right"  >
+
+        <#if courseAuther??>
+            <div class="lecturer-item" style="width: 100%;">
+                <img class="lecturer-uimg" src="${s.base}/res/image/header.jpg">
+                <span class="lecturer-name">${courseAuther.realname}</span>
+                <span class="lecturer-title">${courseAuther.collegeName}</span>
+                <span class="lecturer-p" >${courseAuther.collegeName}${courseAuther.title}，${courseAuther.sign}</span>
+                <#if follow??>
+                <a href="javascript:void(0)" ><span class="follow-btn">已关注</span></a>
+                <#else>
+                <a href="javascript:void(0)" onclick="_recommend('${s.base}/user/follows.do',${courseAuther.id})"><span class="follow-btn">关注+</span></a>
+                </#if>
+            </div>
+        </#if>
+
+        <h4 class="mt-50">推荐课程</h4>
+        <#if courseRecommond??>
+            <#list courseRecommond as item>
+                <a href="${s.base}/course/learn/${item.id}.html" class="mb-5"><li class="ellipsis oc-color-hover">${item.name}</li></a>
+            </#list>
+        </#if>
+    </div>
+    <!-- 教师信息&推荐课程 - end -->
+</div>
+
+<!-- 页脚-start -->
+<#include "./common/footer.html">
+<!-- 页脚-end-->
+
+<script type="text/javascript">
+    $(function(){
+        $('.chapter li').hover(function(){
+            $(this).find('.icon-video').css('color','#FFF');
+        },function(){
+            $(this).find('.icon-video').css('color','#777');
+        });
+
+        $('.js-open').click(function(){
+            var display = $(this).parent().find('ul').css('display');
+            if(display == 'none'){
+                $(this).parent().find('ul').css('display','block');
+                $(this).find('.drop-down').html('▼');
+            }else{
+                $(this).parent().find('ul').css('display','none');
+                $(this).find('.drop-down').html('▲');
+            }
+        });
+
+
+
+
+
+
+    });
+
+    function _recommend(url,followId) {
+        console.log("点击关注,关注id"+followId+"处理地址"+url);
+        $.ajax({
+            url:url,
+            data: {
+                'followId':followId
+            },
+            type:'post',
+            dataType:'json',
+            success:function (result){
+                console.log("返回的数据"+result);
+                if(result==null){
+                    alert("网络出问题了");
+                }
+                 if(result.code==200){
+                    $('.follow-btn').html("已关注");
+                }else{
+                    alert(result.message);
+                }
+            },
+            error:function (data){
+                console.log("失败"+data);
+            }
+        });
+    }
+</script>
+</body>
+</html>

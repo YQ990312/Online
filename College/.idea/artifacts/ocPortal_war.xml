@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="ocPortal:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/ocPortal_war</output-path>
+    <root id="archive" name="ocPortal_war.war">
+      <element id="artifact" artifact-name="ocPortal:war exploded" />
+    </root>
+  </artifact>
+</component>

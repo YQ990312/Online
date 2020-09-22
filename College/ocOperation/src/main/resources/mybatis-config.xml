@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <package name="com.online.operation.service"/>
+    </typeAliases>
+    <!--配置mappering-->
+    <mappers>
+        <mapper resource="com/online/operation/pojo/AuthUserMapper.xml"/>
+        <mapper resource="com/online/operation/pojo/ConstsCollegeMapper.xml"/>
+        <mapper resource="com/online/operation/pojo/ConstsSiteCarouselMapper.xml"/>
+        <mapper resource="com/online/operation/pojo/ConstsClassifyMapper.xml"/>
+        <mapper resource="com/online/operation/pojo/CourseCommentMapper.xml"/>
+         <mapper resource="com/online/operation/pojo/CourseMapper.xml"/>
+        <mapper resource="com/online/operation/pojo/CourseSectionMapper.xml"/>
+         <mapper resource="com/online/operation/pojo/CourseStudyStaticsMapper.xml"/>
+        <mapper resource="com/online/operation/pojo/UserCollectionsMapper.xml"/>
+         <mapper resource="com/online/operation/pojo/UserCourseSectionMapper.xml"/>
+        <mapper resource="com/online/operation/pojo/UserFollowsMapper.xml"/>
+         <mapper resource="com/online/operation/pojo/UserMessageMapper.xml"/>
+    </mappers>
+</configuration>

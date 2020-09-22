@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <package name="com.online.college.service"/>
+    </typeAliases>
+    <!--配置mappering-->
+    <mappers>
+        <mapper resource="com/online/college/service/consts/pojo/ConstsSiteCarouselMapper.xml"/>
+        <mapper resource="com/online/college/service/consts/pojo/ConstsClassifyMapper.xml"/>
+        <mapper resource="com/online/college/service/course/pojo/CourseMapper.xml"/>
+        <mapper resource="com/online/college/service/auth/pojo/AuthUserMapper.xml"/>
+        <mapper resource="com/online/college/service/course/pojo/CourseSectionMapper.xml"/>
+        <mapper resource="com/online/college/service/user/pojo/UserCourseSectionMapper.xml"/>
+        <mapper resource="com/online/college/service/user/pojo/UserFollowsMapper.xml"/>
+        <mapper resource="com/online/college/service/user/pojo/UserCollectionsMapper.xml"/>
+    </mappers>
+</configuration>
